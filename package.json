@@ -1,0 +1,88 @@
+{
+  "name": "@dsh-plugin/dsh-mode-builder",
+  "version": "0.1.0",
+  "description": "在 DSH 配置界面派生自定义 Agent 模式：从既有模式继承工具与 SKILL，可视化勾选后直接在新建会话时选用。",
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./client": {
+      "types": "./lib/types/client/index.d.ts",
+      "default": "./lib/client.js"
+    },
+    "./package.json": "./package.json",
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg"
+  },
+  "files": [
+    "lib",
+    "cordis.patch.yml",
+    "locale",
+    "icon.svg",
+    "README.md",
+    "docs",
+    "LICENSE"
+  ],
+  "scripts": {
+    "clean": "node --input-type=module -e \"import { rmSync } from 'node:fs'; rmSync('lib', { recursive: true, force: true });\"",
+    "build": "npm run clean && tsc -p tsconfig.json && tsc -p tsconfig.client.build.json && tsdown",
+    "typecheck": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.client.json --noEmit",
+    "test": "npm run build && node --test tests/*.test.mjs",
+    "prepack": "npm run build"
+  },
+  "dependencies": {
+    "js-yaml": "^4.1.0"
+  },
+  "peerDependencies": {
+    "@dsh-plugin/dsh-loader": "^2.0.0-dev.43473963317"
+  },
+  "devDependencies": {
+    "@dsh-plugin/dsh-loader": "2.0.0-dev.43473963317",
+    "@types/js-yaml": "^4.0.9",
+    "@types/node": "^24.13.3",
+    "@types/react": "^18.3.31",
+    "@types/react-dom": "^18.3.7",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "tsdown": "^0.22.2",
+    "typescript": "^5.9.3"
+  },
+  "engines": {
+    "node": ">=24.9.0",
+    "dsh": ">=0.2.2-rc.1 <0.3.0"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "inject": [
+        "@deepseek-ai/dsh-client-locale",
+        "@dsh-plugin/dsh-loader"
+      ]
+    }
+  },
+  "keywords": [
+    "deepseek-harness",
+    "dsh",
+    "plugin",
+    "agent-preset",
+    "mode",
+    "skills",
+    "tools"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dsh-plugins/dsh-mode-builder.git"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  }
+}
