@@ -2,5 +2,7 @@
 # 该行由 `dsh.bundle.patch` 声明，`dsh plugin add` 会把它同步进 profile 的
 # `dsh.profile.bundles`，启动时自动应用，无需手工编辑 cordis.patch.yml。
 - insert:
+    - id: dsh-mode-builder-loader-check
+      name: '@dsh-plugin/dsh-mode-builder/loader-check'
     - id: dsh-mode-builder
       name: '@dsh-plugin/dsh-mode-builder'
